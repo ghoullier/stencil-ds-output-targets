@@ -1,7 +1,7 @@
 import path from 'node:path';
 import type { ComponentCompilerMeta } from '@stencil/core/internal';
 import { Project, SourceFile } from 'ts-morph';
-import { createStencilReactComponents } from './create-stencil-react-components';
+import { createStencilReactComponents, createStencilReactComponentsIndex } from './create-stencil-react-components';
 import { createStencilNextComponents } from './create-next-wrapper';
 import { kebabToPascalCase } from './utils/string-utils';
 
@@ -65,6 +65,7 @@ export const createComponentWrappers = async ({
       });
       fileContents[outputPath] = stencilReactComponent;
     }
+    fileContents['index.ts'] = createStencilReactComponentsIndex({components});
   } else {
     /**
      * Generate a single entry point for all the components
